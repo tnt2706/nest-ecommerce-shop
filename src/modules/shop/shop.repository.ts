@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Shop } from '../shop.schema';
+import { Shop } from './shop.schema';
 
 @Injectable()
 export class ShopRepository {

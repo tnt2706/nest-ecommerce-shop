@@ -3,32 +3,31 @@ import * as bcrypt from 'bcrypt';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Shop } from './schemas/shop.schema';
-import { CreateShopDto } from './dto';
+import { Shop } from './shop.schema';
+import { CreateShopDto, ShopDto } from './shop.dto';
 
-import { ShopRepository } from './schemas/repositories/shop.repo';
+import { ShopRepository } from './shop.repository';
 
 @Injectable()
-export class AccessService {
+export class ShopService {
   constructor(
     private readonly shopRepository: ShopRepository,
     @InjectModel(Shop.name) private shopModel: Model<Shop>,
   ) {}
 
-  async create(createShop: CreateShopDto) {
+  async create(createShop: CreateShopDto): Promise<ShopDto> {
     const { email, password } = createShop;
-    const shop = await this.shopRepository.findByUserEmail(email);
-    if (shop) {
+    const holderShop = await this.shopRepository.findByUserEmail(email);
+    if (holderShop) {
       throw new BadRequestException('Email already exists');
     }
 
     const hashedPassword: string = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
+    const shop = await this.shopModel.create({
+      ...createShop,
+      password: hashedPassword,
+    });
 
-    return null;
-  }
-
-  findAll(query): Shop[] {
-    return [];
+    return ShopDto.plainToClass(shop);
   }
 }

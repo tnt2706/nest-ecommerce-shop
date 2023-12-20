@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, now } from 'mongoose';
 
 export type ShopDocument = HydratedDocument<Shop>;
 
-@Schema()
+@Schema({ timestamps: true, collection: 'shops' })
 export class Shop {
   @Prop({ required: true })
   name: string;
@@ -11,7 +11,7 @@ export class Shop {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ default: 'inactive', enum: ['active', 'inactive'] })
+  @Prop({ default: 'active', enum: ['active', 'inactive'] })
   status: string;
 
   @Prop({ required: true })
@@ -22,6 +22,12 @@ export class Shop {
 
   @Prop({ default: [] })
   roles: string[];
+
+  @Prop({ default: now() })
+  createdAt: Date;
+
+  @Prop({ default: now() })
+  updatedAt: Date;
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop);
