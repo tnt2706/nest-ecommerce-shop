@@ -11,7 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 
 import { CommonModule } from './common/common.module';
 import { ConfigureModule } from './config/config.module';
-import { DatabaseModule } from './dbs/database.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
