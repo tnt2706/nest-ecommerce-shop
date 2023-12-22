@@ -1,3 +1,4 @@
-import { LoginDto } from './login.dto';
+import { LoginDto } from './auth.dto';
+import { CreateKeyTokenDto } from './keyToken.dto';
 
-export { LoginDto };
+export { LoginDto, CreateKeyTokenDto };

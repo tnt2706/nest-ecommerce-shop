@@ -1,6 +1,8 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Request } from 'express';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 
 import { LoginDto } from './dto';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -8,17 +10,19 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/login')
-  async loginShop(@Body() loginDto: LoginDto) {
+  async login(@Body() loginDto: LoginDto) {
     return await this.authService.login(loginDto);
   }
 
+  @UseGuards(AuthGuard)
   @Post('/logout')
-  async loginShop(@Body() logoutDto: any) {
-    return await this.authService.logout(loginDto);
+  async logout(@Req() req: Request) {
+    return await this.authService.logout(req);
   }
 
+  @UseGuards(AuthGuard)
   @Post('/handlerRefresherToken')
-  async handlerRefresherToken(@Body() loginDto: LoginDto) {
-    return await this.authService.login(loginDto);
+  async handlerRefresherToken(@Req() req: Request) {
+    return await this.authService.handlerRefresherToken(req);
   }
 }

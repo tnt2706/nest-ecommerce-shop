@@ -28,6 +28,8 @@ export class ShopService {
       password: hashedPassword,
     });
 
-    return ShopDto.plainToClass(shop);
+    return null;
+
+    // return ShopDto.plainToClass(shop);
   }
 }

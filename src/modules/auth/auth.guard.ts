@@ -2,35 +2,73 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+
+import * as _ from 'lodash';
+
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
+import { KeyTokenRepository } from './repositories/key.repository';
+
+const HEADER = {
+  API_KEY: 'x-api-key',
+  AUTHORIZATION: 'authorization',
+  CLIENT_ID: 'x-client-id',
+  REFRESH_TOKEN: 'x-rtoken-id',
+};
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private readonly keyTokenRepo: KeyTokenRepository,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
-    if (!token) {
-      throw new UnauthorizedException();
+    const req = context.switchToHttp().getRequest();
+
+    const userId = req.headers[HEADER.CLIENT_ID];
+    if (!userId) {
+      throw new UnauthorizedException('Required x-client-id in header');
     }
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        //         secret: jwtConstants.secret,
+
+    const keyStore = await this.keyTokenRepo.getByUserId(userId);
+    if (!keyStore) {
+      throw new NotFoundException('Not found key store');
+    }
+
+    const { publicKey, privateKey } = keyStore;
+
+    const refreshToken = req.headers[HEADER.REFRESH_TOKEN];
+    if (refreshToken) {
+      const decodeUser = await this.jwtService.verifyAsync(refreshToken, {
+        publicKey: privateKey,
       });
 
-      request['user'] = payload;
-    } catch {
-      throw new UnauthorizedException();
-    }
-    return true;
-  }
+      if (decodeUser.userId !== userId) {
+        throw new UnauthorizedException('Invalid refresh token');
+      }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+      req.keyStore = keyStore;
+      req.refreshToken = refreshToken;
+      req.user = _.pick(decodeUser, ['userId', 'email', 'roles', 'name']);
+
+      return true;
+    }
+
+    const accessToken = req.headers[HEADER.AUTHORIZATION];
+
+    const decodeUser = await this.jwtService.verifyAsync(accessToken, {
+      publicKey,
+    });
+
+    if (decodeUser.userId !== userId) {
+      throw new UnauthorizedException('Invalid access token');
+    }
+
+    req.keyStore = keyStore;
+    req.user = decodeUser;
+    return true;
   }
 }

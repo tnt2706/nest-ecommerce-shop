@@ -12,4 +12,9 @@ export class ShopRepository {
     const foundShop = this.shopModel.findOne({ email: email }).lean();
     return foundShop ? foundShop : null;
   }
+
+  async findById(id: string) {
+    const foundShop = this.shopModel.findById(id).lean();
+    return foundShop ? foundShop : null;
+  }
 }

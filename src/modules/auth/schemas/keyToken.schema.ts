@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
+import { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type KeyDocument = HydratedDocument<Key>;
 
@@ -16,10 +16,10 @@ export class Key {
   privateKey: string;
 
   @Prop({ default: false })
-  refreshTokenUsed: string;
+  refreshToken: string;
 
   @Prop({ default: [] })
-  refreshToken: string[];
+  refreshTokenUsed: string[];
 }
 
 export const KeySchema = SchemaFactory.createForClass(Key);
