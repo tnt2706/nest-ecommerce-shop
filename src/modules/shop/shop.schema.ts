@@ -22,12 +22,6 @@ export class Shop {
 
   @Prop({ default: [] })
   roles: string[];
-
-  @Prop({ default: now() })
-  createdAt: Date;
-
-  @Prop({ default: now() })
-  updatedAt: Date;
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop);

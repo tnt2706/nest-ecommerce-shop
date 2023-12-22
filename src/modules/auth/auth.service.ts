@@ -11,15 +11,17 @@ import * as _ from 'lodash';
 import { LoginDto } from './dto';
 import { AuthUtils } from './auth.util';
 import { ShopRepository } from '../shop/shop.repository';
+import { KeyTokenRepository } from './repositories/key.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly shopRepository: ShopRepository,
     private readonly authUtils: AuthUtils,
+    private readonly keyTokenRepo: KeyTokenRepository,
   ) {}
 
-  async loginShop(loginDto: LoginDto) {
+  async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
     const holderShop = await this.shopRepository.findByUserEmail(email);
     if (!holderShop) {
@@ -31,17 +33,23 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password');
     }
 
-    const payload = _.pick(holderShop, ['name', 'email', 'roles']);
+    const payload = _.pick(holderShop, ['_id', 'name', 'email', 'roles']);
 
     const publicKey = randomBytes(64).toString('hex');
     const privateKey = randomBytes(64).toString('hex');
 
     const token = await this.authUtils.createPairToken(
       payload,
-      publicKey,
-      privateKey,
+      publicKey.toString(),
+      privateKey.toString(),
     );
+
+    this.keyTokenRepo.create();
 
     return token;
   }
+
+  async logout(userId: string) {}
+
+  async handlerRefresherToken(userId: string) {}
 }

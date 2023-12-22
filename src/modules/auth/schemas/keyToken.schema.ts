@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose';
 
 export type KeyDocument = HydratedDocument<Key>;
 
-@Schema()
+@Schema({ timestamps: true, collection: 'keys' })
 export class Key {
   @Prop({ type: mongoose.Schema.Types.ObjectId })
   user: mongoose.Schema.Types.ObjectId;
