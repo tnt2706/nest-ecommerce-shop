@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 
 import { ShopModule } from './modules/shop/shop.module';
 import { OrdersModule } from './modules/orders/orders.module';
-import { ProductsModule } from './modules/products/products.module';
+import { ProductModule } from './modules/product/products.module';
 import { CatsModule } from './modules/cats/cats.module';
 import { AuthModule } from './modules/auth/auth.module';
 
@@ -22,7 +22,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
     ConfigureModule,
     DatabaseModule,
     OrdersModule,
-    ProductsModule,
+    ProductModule,
     CatsModule,
     AuthModule,
     ThrottlerModule.forRoot([
