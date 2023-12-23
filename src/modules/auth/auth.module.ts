@@ -8,13 +8,22 @@ import { KeyTokenRepository } from './repositories/key.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Key, KeySchema } from './schemas/keyToken.schema';
+import { AuthGuard } from './auth.guard';
 @Module({
   imports: [
     ShopModule,
     JwtModule.register({ global: true }),
     MongooseModule.forFeature([{ name: Key.name, schema: KeySchema }]),
   ],
-  providers: [AuthService, AuthUtils, KeyTokenRepository],
+  providers: [
+    AuthService,
+    AuthUtils,
+    KeyTokenRepository,
+    {
+      provide: 'AUTH_GUARD',
+      useClass: AuthGuard,
+    },
+  ],
   controllers: [AuthController],
   exports: [AuthService],
 })
