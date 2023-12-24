@@ -8,7 +8,8 @@ import { KeyTokenRepository } from './repositories/key.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Key, KeySchema } from './schemas/keyToken.schema';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 @Module({
   imports: [
     ShopModule,
@@ -23,8 +24,12 @@ import { AuthGuard } from './auth.guard';
       provide: 'AUTH_GUARD',
       useClass: AuthGuard,
     },
+    {
+      provide: 'ROLE_GUARD',
+      useClass: RolesGuard,
+    },
   ],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, KeyTokenRepository],
 })
 export class AuthModule {}

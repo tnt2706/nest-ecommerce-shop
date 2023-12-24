@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import { Token } from './interfaces/Token.interface';
+import { Token } from './interfaces/token.interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

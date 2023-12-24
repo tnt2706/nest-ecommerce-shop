@@ -9,7 +9,10 @@ import {
 import * as _ from 'lodash';
 
 import { JwtService } from '@nestjs/jwt';
-import { KeyTokenRepository } from './repositories/key.repository';
+import { KeyTokenRepository } from '../repositories/key.repository';
+import { Reflector } from '@nestjs/core';
+import { Auth } from '../enums/auth.enum';
+import { AUTH_KEY } from '../decorators/auth.decorator';
 
 const HEADER = {
   API_KEY: 'x-api-key',
@@ -21,11 +24,21 @@ const HEADER = {
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
+    private reflector: Reflector,
     private jwtService: JwtService,
     private readonly keyTokenRepo: KeyTokenRepository,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const authMetaData = this.reflector.getAllAndOverride<Auth[]>(AUTH_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (authMetaData?.includes(Auth.Skip)) {
+      return true;
+    }
+
     const req = context.switchToHttp().getRequest();
 
     const userId = req.headers[HEADER.CLIENT_ID];
