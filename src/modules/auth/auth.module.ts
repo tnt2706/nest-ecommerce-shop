@@ -8,8 +8,8 @@ import { KeyTokenRepository } from './repositories/key.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Key, KeySchema } from './schemas/keyToken.schema';
-import { AuthGuard } from './guards/auth.guard';
-import { RolesGuard } from './guards/roles.guard';
+import { AuthGuard } from '../../guards/auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 @Module({
   imports: [
     ShopModule,

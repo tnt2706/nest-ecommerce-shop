@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 
 import { LoginDto } from './dto';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from '../../guards/auth.guard';
 import { AuthService } from './auth.service';
 
 @Controller('auth')

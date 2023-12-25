@@ -11,7 +11,7 @@ export class Product {
   @Prop({ required: true })
   product_thumb: string;
 
-  @Prop({ required: true })
+  @Prop()
   product_slug: string;
 
   @Prop({ required: true })

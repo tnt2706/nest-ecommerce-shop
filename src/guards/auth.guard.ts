@@ -9,7 +9,7 @@ import {
 import * as _ from 'lodash';
 
 import { JwtService } from '@nestjs/jwt';
-import { KeyTokenRepository } from '../repositories/key.repository';
+import { KeyTokenRepository } from '../modules/auth/repositories/key.repository';
 import { Reflector } from '@nestjs/core';
 import { Auth } from '../enums/auth.enum';
 import { AUTH_KEY } from '../decorators/auth.decorator';
