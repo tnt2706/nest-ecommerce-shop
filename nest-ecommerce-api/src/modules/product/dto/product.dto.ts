@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-import { BaseDto } from 'src/common/dto/base.dto';
+import { BaseDto } from 'ecommerce-api/src/common/dto/base.dto';
 
 export class ProductDto extends BaseDto {
   @Expose()

@@ -1,9 +1,9 @@
 import { Schema, Document } from 'mongoose';
-import { Shop } from 'src/modules/shop/shop.model';
+import { Shop } from 'ecommerce-api/src/modules/shop/shop.model';
 
-const ElectronicSchema = new Schema(
+const ClothingSchema = new Schema(
   {
-    manufacture: { type: String, require: true },
+    brand: { type: String, require: true },
     size: { type: String, require: true },
     material: { type: String, require: true },
     product_shop: { type: Schema.Types.ObjectId, ref: 'Shop' },
@@ -12,10 +12,10 @@ const ElectronicSchema = new Schema(
     timestamps: true,
   },
 );
-export { ElectronicSchema };
+export { ClothingSchema };
 
-export interface Electronic extends Document {
-  manufacture: string;
+export interface Clothing extends Document {
+  brand: string;
   size: string;
   material: string;
   product_shop: Shop;

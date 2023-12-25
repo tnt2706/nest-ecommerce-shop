@@ -1,6 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsString } from 'class-validator';
-import { BaseDto } from 'src/common/dto/base.dto';
+import { BaseDto } from 'ecommerce-api/src/common/dto/base.dto';
 
 export class ShopDto extends BaseDto {
   @Expose()

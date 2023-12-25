@@ -1,6 +1,6 @@
 import slugify from 'slugify';
 import { Schema, Document } from 'mongoose';
-import { Shop } from 'src/modules/shop/shop.model';
+import { Shop } from 'ecommerce-api/src/modules/shop/shop.model';
 
 const ProductSchema = new Schema(
   {
