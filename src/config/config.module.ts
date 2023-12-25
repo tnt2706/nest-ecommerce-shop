@@ -11,7 +11,8 @@ import cloudinary from './cloudinary.config';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [aws, database, container, cloudinary],
+      envFilePath: ['.env.dev', '.env.production'],
     }),
   ],
 })
-export class ConfigureModule {}
+export class ConfigsModule {}

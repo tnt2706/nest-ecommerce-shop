@@ -11,7 +11,7 @@ import { CatsModule } from './modules/cats/cats.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 import { CommonModule } from './common/common.module';
-import { ConfigureModule } from './config/config.module';
+import { ConfigsModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 
@@ -19,7 +19,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
   imports: [
     ShopModule,
     CommonModule,
-    ConfigureModule,
+    ConfigsModule,
     DatabaseModule,
     OrdersModule,
     ProductModule,
