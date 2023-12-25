@@ -11,7 +11,7 @@ export class Electronic {
   @Prop({ required: true, unique: true })
   size: string;
 
-  @Prop({ default: 'active', enum: ['active', 'inactive'] })
+  @Prop({ required: true })
   material: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId })

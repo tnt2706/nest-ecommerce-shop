@@ -28,7 +28,7 @@ export class ProductDto extends BaseDto {
   product_shop: string;
 
   @Expose()
-  product_attributes: object;
+  product_attributes: any;
 
   @Expose()
   product_ratingAverage: number;
@@ -60,10 +60,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   product_type: string;
 
-  @IsString()
-  product_shop: string;
-
-  product_attributes: object;
+  product_attributes: any;
 
   @IsNumber()
   product_ratingAverage: number;
