@@ -1,9 +1,9 @@
 import { Expose, plainToClass } from 'class-transformer';
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
 export class BaseDto {
   @Expose()
-  _id: mongoose.Types.ObjectId;
+  _id: Schema.Types.ObjectId;
 
   @Expose()
   createdAt: Date;
@@ -11,7 +11,7 @@ export class BaseDto {
   @Expose()
   updatedAt: Date;
 
-  static plainToClass<T>(this: new (...args: any[]) => T, object: T): T {
+  static plainToClass<T>(this: new (...args: any[]) => any, object: T): T {
     return plainToClass(this, object, { excludeExtraneousValues: true });
   }
 }

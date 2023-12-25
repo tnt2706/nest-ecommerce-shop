@@ -1,5 +1,6 @@
 import helmet from 'helmet';
 // import * as csurf from 'csurf';
+import * as compression from 'compression';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 
@@ -15,6 +16,7 @@ async function bootstrap() {
   });
 
   app.use(helmet());
+  app.use(compression());
   // app.use(csurf());
   app.enableCors();
 

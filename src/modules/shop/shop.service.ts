@@ -3,16 +3,17 @@ import * as bcrypt from 'bcrypt';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Shop } from './shop.schema';
+import { Shop } from './shop.model';
 import { CreateShopDto, ShopDto } from './shop.dto';
 
 import { ShopRepository } from './shop.repository';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class ShopService {
   constructor(
     private readonly shopRepository: ShopRepository,
-    @InjectModel(Shop.name) private shopModel: Model<Shop>,
+    @InjectModel('Shop') private shopModel: Model<Shop>,
   ) {}
 
   async create(createShop: CreateShopDto): Promise<ShopDto> {
@@ -28,8 +29,6 @@ export class ShopService {
       password: hashedPassword,
     });
 
-    return null;
-
-    // return ShopDto.plainToClass(shop);
+    return plainToClass(ShopDto, shop, { excludeExtraneousValues: true });
   }
 }

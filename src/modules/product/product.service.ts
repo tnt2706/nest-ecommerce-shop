@@ -3,16 +3,16 @@ import { CreateProductDto, ProductDto } from './dto/product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Product, Electronic, Clothing } from './schemas';
+import { Product, Electronic, Clothing } from './models';
 
 @Injectable()
 class ProductService {
   static productRegistry = {};
 
   constructor(
-    @InjectModel(Product.name) private productModel: Model<Product>,
-    @InjectModel(Clothing.name) private clothingModel: Model<Clothing>,
-    @InjectModel(Electronic.name) private electronicModel: Model<Electronic>,
+    @InjectModel('Product') private productModel: Model<Product>,
+    @InjectModel('Clothing') private clothingModel: Model<Clothing>,
+    @InjectModel('Electronic') private electronicModel: Model<Electronic>,
   ) {}
 
   static async registerProductType(type, classRef): Promise<void> {
