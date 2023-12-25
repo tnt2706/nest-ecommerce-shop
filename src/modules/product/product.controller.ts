@@ -18,7 +18,6 @@ export class ProductController {
     @Req() req: Request,
     @Body() createProductDto: Partial<CreateProductDto>,
   ): Promise<ProductDto> {
-    console.log('aaa');
     return this.productService.create(req, createProductDto);
   }
 }
