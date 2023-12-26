@@ -1,5 +1,5 @@
 import { Schema, Document } from 'mongoose';
-import { Shop } from 'ecommerce-api/src/modules/shop/shop.model';
+import { Shop } from '../../shop/shop.model';
 
 const ClothingSchema = new Schema(
   {

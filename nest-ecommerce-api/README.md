@@ -75,3 +75,14 @@ Nest is [MIT licensed](LICENSE).
 ## Guards in the NestJS lifecycle
 
 ![incoming-request-flow-guards](/public/incoming-request-flow-guards.avif)
+
+## Microservices
+
+### TCP
+
+- With client use method `send`  to server ensure that `@MessagePattern` to `Response data`
+- With client use method `emit`  to server ensure that `@EventPattern` to handle logic in server
+
+> Always return with method `send` and `emit`
+
+### Redis
