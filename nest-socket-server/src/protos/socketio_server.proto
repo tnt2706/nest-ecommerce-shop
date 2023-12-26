@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package socketio;
+
+service SocketioServer {
+  rpc NotifyClients (NotifyClientsRequest) returns (GeneralResponse) {};
+}
+
+message NotifyClientsRequest {
+  string room = 1;
+  string event_name = 2;
+  string json_message = 3;
+  string message = 4;
+}
+
+message GeneralResponse {
+  bool is_success = 1;
+}
