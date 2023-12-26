@@ -10,8 +10,6 @@ async function bootstrap() {
     protoFile: 'socketio_server.proto',
   });
 
-  console.log(grpcConfig.get());
-
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {

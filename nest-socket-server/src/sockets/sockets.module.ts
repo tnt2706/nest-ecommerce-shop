@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { SocketsController } from './sockets.controller';
 
-@Module({})
+@Module({
+  controllers: [SocketsController],
+})
 export class SocketsModule {}
