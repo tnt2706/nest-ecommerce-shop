@@ -3,6 +3,7 @@ import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 import { AppModule } from './app.module';
 import { GrpcConfig } from './configs/grpc.config';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const grpcConfig = new GrpcConfig({
