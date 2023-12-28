@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AuthController } from './auth.container';
+import { AuthController } from './auth.controller';
 import { RedisModule } from '../redis/redis.module';
 import { KeyTokenModule } from '../keytoken/key-token.module';
 import { ShopModule } from '../shop/shop.module';

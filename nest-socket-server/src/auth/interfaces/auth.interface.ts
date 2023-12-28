@@ -6,9 +6,3 @@ export interface VerifyTokenRequest {
 export interface AuthCacheServerInterface {
   verifyToken(request: VerifyTokenRequest): Promise<any>;
 }
-
-export interface VerifyTokenResponse {
-  isSuccess: boolean;
-  message: string;
-  signature: any;
-}
