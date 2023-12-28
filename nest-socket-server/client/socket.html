@@ -11,9 +11,10 @@
   <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
 
   <script>
-    var socket = io.connect('http://localhost:3000', {
+    var socket = io.connect('http://localhost:80', {
       extraHeaders: {
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhdG5xdWl0QGdtYWlsLmNvbSIsImlzU2Vjb25kRmFjdG9yQXV0aGVudGljYXRlZCI6ZmFsc2UsImlhdCI6MTY4MTgyOTgyMCwiZXhwIjoxNjgxOTE2MjIwfQ.34GoJKM1nH5GrGf5njid7QR7VzsruxmTKRm3-WSOKUQ"
+        access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2hvcDEiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsInJvbGVzIjpbImFkbWluIl0sInVzZXJJZCI6IjY1ODUxYjU1MTkyZmM1ZGQ2Yjg0MjZhMyIsImlhdCI6MTcwMzc1MTY0MiwiZXhwIjoxNzAzOTI0NDQyfQ.W05cqbV1wUm2trZTKo1v2w06HQ1TrYt1o-iG1uNInkk",
+        user_id:"65851b55192fc5dd6b8426a3"
       }
     });
     socket.on('connect', function () {
