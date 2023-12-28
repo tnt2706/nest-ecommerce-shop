@@ -12,7 +12,7 @@ import { redisStore } from 'cache-manager-redis-store';
     CacheModule.registerAsync({
       imports: [ConfigModule],
 
-      useFactory: async (config: ConfigService) => {
+      useFactory: (config: ConfigService) => {
         return { store: redisStore, ...config.get('redisDbs.authDb') };
       },
       inject: [ConfigService],

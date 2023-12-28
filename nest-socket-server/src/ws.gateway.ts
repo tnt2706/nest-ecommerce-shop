@@ -7,11 +7,11 @@ import {
   SubscribeMessage,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { ContainerConfig } from './configs/container.config';
+
 import { BadRequestException } from '@nestjs/common';
 import { SharedService } from './shared/shared.service';
 
-const port = new ContainerConfig().get('port');
+const port = parseInt(process.env.PORT || '80', 10) || 80;
 
 const ROOM = 'room1';
 
@@ -38,11 +38,11 @@ export class SocketGateway
     // handshake.headers;
     try {
       const { userId, accessToken } = client.handshake.headers || {};
-      if (!userId || !accessToken) {
-        throw new BadRequestException(
-          'Required access token and userId are required',
-        );
-      }
+      // if (!userId || !accessToken) {
+      //   throw new BadRequestException(
+      //     'Required access token and userId are required',
+      //   );
+      // }
 
       // const { isSuccess, signature } = await this.sharedService.verifyToken({
       //   id: userId.toString(),
@@ -56,6 +56,7 @@ export class SocketGateway
   }
 
   handleDisconnect(client: Socket) {
+    console.log(`Client disconnect: ${client}`);
     client.leave(ROOM);
     client.disconnect();
   }

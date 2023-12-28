@@ -2,20 +2,14 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SocketsModule } from './sockets/sockets.module';
-import { ConfigModule } from '@nestjs/config';
+
 import { HealthcheckModule } from './healthcheck/healthcheck.module';
 import { SocketGateway } from './ws.gateway';
 import { SharedModule } from './shared/shared.module';
+import { ConfigsModule } from './configs/config.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.env',
-    }),
-    SocketsModule,
-    HealthcheckModule,
-    SharedModule,
-  ],
+  imports: [ConfigsModule, SocketsModule, HealthcheckModule, SharedModule],
   controllers: [AppController],
   providers: [AppService, SocketGateway],
 })
