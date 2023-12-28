@@ -5,6 +5,7 @@ import {
   NotifyClientsInterface,
   NotifyClientsRequest,
 } from './interfaces/socket.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SocketService implements OnModuleInit {
@@ -26,6 +27,12 @@ export class SocketService implements OnModuleInit {
         ? jsonMessage
         : JSON.stringify(jsonMessage);
 
+    // Return Observable<>
     return this.gRpcService.notifyClients(request);
+
+    // Return to {isSuccess:true }
+
+    // const result = await this.gRpcService.notifyClients(request);
+    // return result.toPromise();
   }
 }
