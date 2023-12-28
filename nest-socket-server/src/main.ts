@@ -2,18 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 import { AppModule } from './app.module';
-import { getGrpcConfig } from './configs/grpc.config';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
-    {
-      transport: Transport.GRPC,
-      options: getGrpcConfig('socketService'),
-    },
-  );
+  const app = await NestFactory.create(AppModule);
 
-  await app.listen();
+  const config = app.get(ConfigService);
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.GRPC,
+    options: config.get('grpc.server'),
+  });
+
+  await app.startAllMicroservices();
+  await app.listen(config.get('port'));
 }
 
 bootstrap();

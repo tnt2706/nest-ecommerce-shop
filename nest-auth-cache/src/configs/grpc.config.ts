@@ -5,9 +5,9 @@ const protosDir = path.join(__dirname, '../../src/protos');
 export default () => ({
   grpc: {
     server: {
-      package: 'authService',
+      package: 'auth',
       protoPath: path.join(protosDir, 'auth_cache_server.proto'),
-      url: process.env.AUTH_SERVER_SERVICE || '0.0.0.0:6900',
+      url: process.env.GRPC_AUTH_SERVER_URL || '0.0.0.0:6900',
       keepalive: {
         keepaliveTimeMs: 10000,
         keepaliveTimeoutMs: 5000,

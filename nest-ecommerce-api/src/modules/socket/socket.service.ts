@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 
 import {
@@ -7,10 +7,10 @@ import {
 } from './interfaces/socket.interface';
 
 @Injectable()
-export class SocketService {
+export class SocketService implements OnModuleInit {
   private gRpcService: NotifyClientsInterface;
 
-  constructor(@Inject('SOCKET_SERVER') private client: ClientGrpc) {}
+  constructor(@Inject('SOCKET_SERVICE') private client: ClientGrpc) {}
 
   onModuleInit() {
     // With `SocketioServer` in name of service in file .proto

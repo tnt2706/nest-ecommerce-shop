@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package authService;
+package auth;
 
 service AuthCacheServer {
   rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);

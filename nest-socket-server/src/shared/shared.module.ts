@@ -1,20 +1,22 @@
 import { Module } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import { getGrpcConfig } from 'src/configs/grpc.config';
 import { SharedService } from './shared.service';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   providers: [
-    SharedService,
     {
       provide: 'AUTH_SERVICE',
-      useFactory: () => {
+      useFactory: (config: ConfigService) => {
         return ClientProxyFactory.create({
           transport: Transport.GRPC,
-          options: getGrpcConfig('authService'),
+          options: config.get('grpc.clients.authService'),
         });
       },
+
+      inject: [ConfigService],
     },
+    SharedService,
   ],
   exports: [SharedService],
 })

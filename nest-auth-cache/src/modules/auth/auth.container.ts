@@ -25,6 +25,8 @@ export class AuthController {
   async VerifyToken(request: any): Promise<any> {
     const { id, token } = request;
 
+    console.log('### VerifyToken ::: ', { request });
+
     if (!id || !token) {
       throw new BadRequestException(' Missing request data');
     }

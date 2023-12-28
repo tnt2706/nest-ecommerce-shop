@@ -8,7 +8,7 @@ import { SocketService } from './socket.service';
   providers: [
     SocketService,
     {
-      provide: 'SOCKET_SERVER',
+      provide: 'SOCKET_SERVICE',
       useFactory: (configService: ConfigService) => {
         return ClientProxyFactory.create({
           transport: Transport.GRPC,

@@ -7,18 +7,16 @@ import {
   SubscribeMessage,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { ContainerConfig } from './configs/container.config';
 import { BadRequestException } from '@nestjs/common';
 import { SharedService } from './shared/shared.service';
 
-const port = new ContainerConfig().get('port');
+const PORT = parseInt(process.env.WS_PORT || '80', 10);
 
 const ROOM = 'room1';
 
-@WebSocketGateway(port, {
-  cors: {
-    origin: '*',
-  },
+@WebSocketGateway(PORT, {
+  cors: { origin: '*' },
+  // transports: ['websocket'],
 })
 export class SocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
@@ -34,20 +32,19 @@ export class SocketGateway
   }
 
   async handleConnection(client: Socket) {
-    console.log('Handle connection');
-    // handshake.headers;
     try {
-      const { userId, accessToken } = client.handshake.headers || {};
-      if (!userId || !accessToken) {
-        throw new BadRequestException(
-          'Required access token and userId are required',
-        );
+      console.log(`Handle connection ${client.id}`);
+
+      const { user_id, access_token } = client.handshake.headers || {};
+
+      if (!user_id || !access_token) {
+        throw new BadRequestException('Missing headers socket');
       }
 
-      // const { isSuccess, signature } = await this.sharedService.verifyToken({
-      //   id: userId.toString(),
-      //   token: accessToken.toString(),
-      // });
+      const { isSuccess, signature } = await this.sharedService.verifyToken({
+        id: user_id.toString(),
+        token: access_token.toString(),
+      });
     } catch (error) {
       client.disconnect();
     }
@@ -56,11 +53,12 @@ export class SocketGateway
   }
 
   handleDisconnect(client: Socket) {
+    console.log(`Handle disconnect ${client.id}`);
     client.leave(ROOM);
     client.disconnect();
   }
 
   afterInit(client: Socket) {
-    console.log(`Client connected: ${client}`);
+    console.log(`Client init connect`);
   }
 }

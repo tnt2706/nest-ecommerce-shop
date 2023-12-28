@@ -11,6 +11,7 @@ export class SocketsController {
     metadata: Metadata,
     call: ServerUnaryCall<any, any>,
   ): Promise<any> {
+    console.log('NotifyClients');
     return { isSuccess: true };
   }
 }
