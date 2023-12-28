@@ -5,8 +5,6 @@ import {
   MongooseModuleOptions,
 } from '@nestjs/mongoose';
 
-import { getMongoConfig } from 'src/configs/db.config';
-
 @Injectable()
 export class MongooseConfigService implements MongooseOptionsFactory {
   constructor(private config: ConfigService) {}
@@ -14,7 +12,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
     | MongooseModuleOptions
     | Promise<MongooseModuleOptions> {
     return {
-      uri: getMongoConfig('mongo').database,
+      uri: this.config.get('mongo.database'),
     };
   }
 }

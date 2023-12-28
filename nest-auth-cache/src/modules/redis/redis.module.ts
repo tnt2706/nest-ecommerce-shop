@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
-import * as redisStore from 'cache-manager-redis-store';
+
 import { CacheModule } from '@nestjs/cache-manager';
 
 import { RedisService } from './redis.service';
-import { getRedisConfig } from 'src/configs/db.config';
+
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { redisStore } from 'cache-manager-redis-store';
 
 @Module({
-  // Connect
-  // imports: [CacheModule.register<RedisClientOptions>(getRedisConfig())],
   imports: [
     CacheModule.registerAsync({
-      useFactory: async () => ({
-        // isGlobal: true,
-        store: redisStore,
-        ...getRedisConfig(),
-      }),
+      imports: [ConfigModule],
+
+      useFactory: async (config: ConfigService) => {
+        return { store: redisStore, ...config.get('redisDbs.authDb') };
+      },
+      inject: [ConfigService],
     }),
   ],
   providers: [RedisService],
