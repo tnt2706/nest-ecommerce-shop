@@ -24,7 +24,7 @@ export default () => ({
     server: {
       package: 'socketio',
       protoPath: path.join(protosDir, 'socketio_server.proto'),
-      url: process.env.SOCKET_IO_SERVER_SERVICE || '0.0.0.0:6700',
+      url: process.env.GRPC_SOCKET_IO_SERVER_URL || '0.0.0.0:6700',
       keepalive,
       loader,
     },
@@ -32,7 +32,7 @@ export default () => ({
       authService: {
         package: 'auth',
         protoPath: path.join(protosDir, 'auth_cache_server.proto'),
-        url: process.env.AUTH_SERVER_SERVICE || '0.0.0.0:6900',
+        url: process.env.GRPC_AUTH_SERVER_URL || '0.0.0.0:6900',
         keepalive,
         loader,
       },
