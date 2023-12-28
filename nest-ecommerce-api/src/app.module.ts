@@ -9,6 +9,7 @@ import { ProductModule } from './modules/product/product.module';
 import { CatModule } from './modules/cat/cat.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SubscriberModule } from './modules/subscriber/subscriber.module';
+import { SocketModule } from './modules/socket/socket.module';
 
 import { CommonModule } from './common/common.module';
 import { ConfigsModule } from './config/config.module';
@@ -26,6 +27,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
     CatModule,
     AuthModule,
     SubscriberModule,
+    SocketModule,
     // ThrottlerModule.forRoot([
     //   {
     //     ttl: 60,
