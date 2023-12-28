@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { BadRequestException } from '@nestjs/common';
-import { SharedService } from './shared/shared.service';
+import { AuthService } from './auth/auth.service';
 
 const PORT = parseInt(process.env.WS_PORT || '80', 10);
 
@@ -21,7 +21,7 @@ const ROOM = 'room1';
 export class SocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
-  constructor(private readonly sharedService: SharedService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @WebSocketServer() server: Server;
 
@@ -41,15 +41,15 @@ export class SocketGateway
         throw new BadRequestException('Missing headers socket');
       }
 
-      const { isSuccess, signature } = await this.sharedService.verifyToken({
+      const { isSuccess, signature } = await this.authService.verifyToken({
         id: user_id.toString(),
         token: access_token.toString(),
       });
+
+      console.log(isSuccess);
     } catch (error) {
       client.disconnect();
     }
-
-    client.join(ROOM);
   }
 
   handleDisconnect(client: Socket) {

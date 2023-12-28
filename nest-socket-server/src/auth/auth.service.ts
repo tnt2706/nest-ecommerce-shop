@@ -4,16 +4,16 @@ import { ClientGrpc } from '@nestjs/microservices';
 import {
   VerifyTokenRequest,
   AuthCacheServerInterface,
-} from './interfaces/shared.interface';
+} from './interfaces/auth.interface';
 
 @Injectable()
-export class SharedService implements OnModuleInit {
+export class AuthService implements OnModuleInit {
   private gRpcService: AuthCacheServerInterface;
 
   constructor(@Inject('AUTH_SERVICE') private client: ClientGrpc) {}
 
   onModuleInit() {
-    // With `AuthCacheServer` in name of service in file .proto
+    // With `SocketioServer` in name of service in file .proto
     this.gRpcService =
       this.client.getService<AuthCacheServerInterface>('AuthCacheServer');
   }
