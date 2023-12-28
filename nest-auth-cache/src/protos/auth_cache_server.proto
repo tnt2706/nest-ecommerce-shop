@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthCacheServer {
+  rpc VerifyToken(VerifyTokenRequest) returns (VerifyTokenResponse);
+}
+
+message VerifyTokenRequest {
+  string id = 1;
+  string token = 2;
+}
+
+message VerifyTokenResponse {
+  message Signature {
+    string id = 1;
+    string name = 3;
+    string email = 4;
+    repeated string roles = 5;
+    string status = 6;
+    bool verify = 7;
+  }
+
+  bool is_success = 1;
+  string message = 2;
+  Signature signature = 3;
+}

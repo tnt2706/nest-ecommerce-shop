@@ -4,7 +4,7 @@ const protosDir = path.join(__dirname, '../../src/protos');
 
 export default () => ({
   socketServer: {
-    url: process.env.SOCKET_IO_SERVER_SERVICE || '0.0.0.0:6700',
+    url: process.env.GRPC_SOCKET_IO_SERVER_URL || '0.0.0.0:6700',
     package: 'socketio',
     protoPath: path.join(protosDir, 'socketio_server.proto'),
     keepalive: {

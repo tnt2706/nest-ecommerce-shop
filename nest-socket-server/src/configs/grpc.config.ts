@@ -1,37 +1,41 @@
 import * as path from 'path';
 
-export class GrpcConfig {
-  private readonly url: string;
-  private readonly protoFile: string;
-  private readonly package: string;
-  private readonly protosDir = path.join(__dirname, '../../src/protos');
+const protosDir = path.join(__dirname, '../../src/protos');
 
-  constructor({ packageName, protoFile }) {
-    this.package = packageName;
-    this.protoFile = protoFile;
-    this.url = process.env.SOCKET_IO_SERVER_SERVICE || '0.0.0.0:6700';
-  }
+const keepalive = {
+  keepaliveTimeMs: 10000,
+  keepaliveTimeoutMs: 5000,
+  keepalivePermitWithoutCalls: 1,
+  http2MaxPingsWithoutData: 0,
+  http2MinTimeBetweenPingsMs: 10000,
+  http2MinPingIntervalWithoutDataMs: 5000,
+};
 
-  get(): any {
-    return {
-      url: this.url,
-      package: this.package,
-      protoPath: path.join(this.protosDir, this.protoFile),
-      keepalive: {
-        keepaliveTimeMs: 10000,
-        keepaliveTimeoutMs: 5000,
-        keepalivePermitWithoutCalls: 1,
-        http2MaxPingsWithoutData: 0,
-        http2MinTimeBetweenPingsMs: 10000,
-        http2MinPingIntervalWithoutDataMs: 5000,
+const loader = {
+  keepCase: false,
+  longs: String,
+  enums: String,
+  defaults: true,
+  oneofs: true,
+};
+
+export default () => ({
+  grpc: {
+    server: {
+      package: 'socketio',
+      protoPath: path.join(protosDir, 'socketio_server.proto'),
+      url: process.env.SOCKET_IO_SERVER_SERVICE || '0.0.0.0:6700',
+      keepalive,
+      loader,
+    },
+    clients: {
+      authService: {
+        package: 'auth',
+        protoPath: path.join(protosDir, 'auth_cache_server.proto'),
+        url: process.env.AUTH_SERVER_SERVICE || '0.0.0.0:6900',
+        keepalive,
+        loader,
       },
-      loader: {
-        keepCase: false,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true,
-      },
-    };
-  }
-}
+    },
+  },
+});
