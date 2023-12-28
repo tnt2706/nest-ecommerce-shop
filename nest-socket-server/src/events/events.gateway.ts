@@ -8,7 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { BadRequestException } from '@nestjs/common';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 const PORT = parseInt(process.env.WS_PORT || '80', 10);
 
@@ -18,7 +18,7 @@ const ROOM = 'room1';
   cors: { origin: '*' },
   // transports: ['websocket'],
 })
-export class SocketGateway
+export class EventsGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   constructor(private readonly authService: AuthService) {}
@@ -46,7 +46,8 @@ export class SocketGateway
         token: access_token.toString(),
       });
 
-      console.log(isSuccess);
+      // Join room
+      client.join(ROOM);
     } catch (error) {
       client.disconnect();
     }
@@ -60,5 +61,10 @@ export class SocketGateway
 
   afterInit(client: Socket) {
     console.log(`Client init connect`);
+  }
+
+  public sendSocket() {
+    console.log('sendSocket to client');
+    this.server.to(ROOM).emit('message', 'hello world');
   }
 }
