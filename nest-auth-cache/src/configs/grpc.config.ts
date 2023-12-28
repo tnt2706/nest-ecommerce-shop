@@ -2,23 +2,11 @@ import * as path from 'path';
 
 const protosDir = path.join(__dirname, '../../src/protos');
 
-const grpcConfig = {
-  socketService: {
-    package: 'socketio',
-    protoPath: path.join(protosDir, 'socketio_server.proto'),
-    url: process.env.SOCKET_IO_SERVER_SERVICE || '0.0.0.0:6700',
-  },
-
-  authService: {
+export function getGrpcConfig() {
+  return {
     package: 'authService',
     protoPath: path.join(protosDir, 'auth_cache_server.proto'),
     url: process.env.AUTH_SERVER_SERVICE || '0.0.0.0:6900',
-  },
-};
-
-export function getGrpcConfig(key: string) {
-  return {
-    ...grpcConfig[key],
     keepalive: {
       keepaliveTimeMs: 10000,
       keepaliveTimeoutMs: 5000,
