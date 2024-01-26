@@ -8,6 +8,3 @@
   - Call gRPC to `socket-server` ensure send socket to client
 - `nest-socket-server` : Hadle send socket to cient
 - `nest-subscription-handler`: using send mail using TCP
-
-
-
