@@ -39,7 +39,7 @@
     "helmet": "^7.1.0",
     "install": "^0.13.0",
     "mongoose": "^8.0.3",
-    "npm": "^10.2.5",
+    "npm": "^10.8.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "slugify": "^1.6.6"
